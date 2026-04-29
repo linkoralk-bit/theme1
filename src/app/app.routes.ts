@@ -6,7 +6,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
   // { path: '', redirectTo: 'dashboard/Imesha-Damith', pathMatch: 'full' },
-  { path: '', redirectTo: 'event/Piyumi-Nalin', pathMatch: 'full' },
+  { path: '', redirectTo: 'event/Chandika-Pujani', pathMatch: 'full' },
   { path: 'event/:slug', component: EventComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'dashboard/:slug', component: DashboardComponent }
