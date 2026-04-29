@@ -1,0 +1,118 @@
+<div class="p-6 text-white bg-black min-h-screen">
+
+  <h1 class="text-2xl text-yellow-400 mb-4">Admin Panel</h1>
+
+  <!-- CREATE BUTTON -->
+  <button (click)="newEvent()"
+          class="bg-green-500 px-4 py-2 rounded mb-6">
+    + Create New Event
+  </button>
+
+  <!-- EVENTS LIST -->
+  <div class="mb-8">
+    <h2 class="text-xl mb-2">Events</h2>
+
+    <div *ngFor="let e of events"
+         class="border p-3 mb-2 flex justify-between items-center">
+
+      <div>
+        {{ e.groom }} ❤️ {{ e.bride }}
+        <div class="text-sm text-gray-400">{{ e.slug }}</div>
+      </div>
+
+      <div class="flex gap-2">
+        <button (click)="selectEvent(e)" class="bg-blue-500 px-3 py-1 rounded">
+          Edit
+        </button>
+
+        <a [href]="'/event/' + e.slug"
+           target="_blank"
+           class="bg-yellow-500 px-3 py-1 rounded text-black">
+          View
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="border p-4 rounded max-w-xl">
+
+    <h2 class="text-yellow-400 mb-4">
+      {{ selectedEvent ? 'Edit Event' : 'Create Event' }}
+    </h2>
+
+    <!-- BASIC -->
+    <input [(ngModel)]="form.slug" placeholder="Slug" class="input" />
+    <input [(ngModel)]="form.date" placeholder="Date" class="input" />
+
+    <!-- GROOM -->
+    <input [(ngModel)]="form.groom" placeholder="Groom" class="input" />
+
+    <!-- ✅ NEW -->
+    <input [(ngModel)]="form.parents.groom"
+           placeholder="Groom's Parents (Mr. & Mrs...)"
+           class="input" />
+
+    <!-- BRIDE -->
+    <input [(ngModel)]="form.bride" placeholder="Bride" class="input" />
+
+    <!-- ✅ NEW -->
+    <input [(ngModel)]="form.parents.bride"
+           placeholder="Bride's Parents (Mr. & Mrs...)"
+           class="input" />
+
+    <!-- LOCATION -->
+    <input [(ngModel)]="form.location" placeholder="Location" class="input" />
+
+    <!-- GALLERY -->
+    <h3 class="mt-4 text-yellow-400">Gallery</h3>
+
+    <div *ngFor="let img of form.gallery; let i = index">
+      <input [(ngModel)]="form.gallery[i]" class="input" />
+      <button (click)="removeImage(i)">❌</button>
+    </div>
+
+    <button (click)="addImage()" class="text-green-400">
+      + Add Image
+    </button>
+
+    <!-- STORY -->
+    <h3 class="mt-4 text-yellow-400">Story</h3>
+
+    <div *ngFor="let s of form.story; let i = index">
+      <input [(ngModel)]="s.title" placeholder="Title" class="input" />
+      <textarea [(ngModel)]="s.description"
+                placeholder="Description"
+                class="input"></textarea>
+
+      <button (click)="removeStory(i)">❌</button>
+    </div>
+
+    <button (click)="addStory()" class="text-green-400">
+      + Add Story
+    </button>
+
+    <!-- SCHEDULE -->
+    <h3 class="mt-4 text-yellow-400">Schedule</h3>
+
+    <div *ngFor="let s of form.schedule; let i = index">
+      <input [(ngModel)]="s.name" placeholder="Event" class="input" />
+      <input [(ngModel)]="s.time" placeholder="Time" class="input" />
+
+      <button (click)="removeSchedule(i)">❌</button>
+    </div>
+
+    <button (click)="addSchedule()" class="text-green-400">
+      + Add Schedule
+    </button>
+
+    <!-- SAVE -->
+    <button (click)="saveEvent()"
+            class="bg-yellow-500 text-black px-6 py-2 rounded mt-6">
+      Save Changes
+    </button>
+
+  </div>
+
+</div>

@@ -1,0 +1,100 @@
+<div class="dashboard">
+
+  <!-- HERO HEADER -->
+  <div class="hero">
+    <div class="overlay"></div>
+    <h1 class="title">
+      {{ event?.groom }} <span class="heart">❤️</span> {{ event?.bride }}
+    </h1>
+    <p class="subtitle">Wedding Guest Dashboard</p>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Crafting your special day...</p>
+  </div>
+
+  <div *ngIf="!isLoading" class="content">
+
+    <!-- ACTION BUTTON -->
+    <div class="actions">
+      <button (click)="exportToCSV()" class="btn-export">
+        <span>⬇️</span> Export to Excel
+      </button>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="card total">
+        <div class="icon">👥</div>
+        <h3>Total Guests</h3>
+        <p class="number">{{ totalGuests }}</p>
+      </div>
+
+      <div class="card yes">
+        <div class="icon">💍</div>
+        <h3>Attending</h3>
+        <p class="number">{{ attendingCount }}</p>
+        <div class="progress-bar">
+          <div class="progress yes" 
+               [style.width.%]="totalGuests ? (attendingCount / totalGuests * 100) : 0"></div>
+        </div>
+      </div>
+
+      <div class="card no">
+        <div class="icon">🌿</div>
+        <h3>Not Attending</h3>
+        <p class="number">{{ notAttendingCount }}</p>
+        <div class="progress-bar">
+          <div class="progress no" 
+               [style.width.%]="totalGuests ? (notAttendingCount / totalGuests * 100) : 0"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE CARD -->
+    <div class="table-card">
+      <div class="table-header">
+        <h2>Guest List</h2>
+        <input type="text" 
+               placeholder="Search guests by name..." 
+               class="search-input"
+               (input)="filterGuests($event)">
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Guests</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of filteredRsvps">
+              <td class="name">{{ r.name }}</td>
+              <td>{{ r.phone }}</td>
+              <td class="guest-count">{{ r.guestCount || 1 }}</td>
+              <td>
+                <span class="status" 
+                      [class.attending]="r.attending"
+                      [class.not-attending]="!r.attending">
+                  {{ r.attending ? '✓ Attending' : '✕ Not Attending' }}
+                </span>
+              </td>
+              <td>
+                <button (click)="openWhatsApp(r.phone, r.name)" class="btn-whatsapp">
+                  <span>💬</span> WhatsApp
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
